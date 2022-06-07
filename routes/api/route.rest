@@ -4,11 +4,17 @@ Content-Type: application/json
  {
      "top_text": "Ordinar",
      "bottom_text": "Extraordinar",
-     "file": "willy-wonka"
+     "file": "success-kid"
  }
 
 ###
 GET http://localhost:5000/api/meme-builder/getDefaultMemes
 
 ###
-GET http://localhost:5000/api/meme-builder/getGeneratedMemes
+GET http://localhost:5000/api/meme-builder/getGeneratedMemes/
+
+###
+GET http://localhost:5000/api/meme-builder/getGeneratedMemes/1-4
+
+###
+DELETE http://localhost:5000/api/meme-builder/deleteGeneratedMemes/
