@@ -1,7 +1,7 @@
-function show(req, res) {
+function showMemes(req, res) {
     const defaultMemes = require("../../defaultMemes.json")
     res.status(200).json(defaultMemes);
 }
 module.exports = {
-    show
+    showMemes
 }

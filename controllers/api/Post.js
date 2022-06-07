@@ -11,15 +11,24 @@ function meme(req, res) {
         const context = canvas.getContext("2d")
         const topText = req.body.top_text.toUpperCase();
         const bottomText = req.body.bottom_text.toUpperCase();
-        // !!Bug: Imi afiseaza jumatate din text in afara pozei
+       
         loadImage(data).then(loadedImage => {
             context.drawImage(loadedImage, 0, 0);
-            // Text Quality
-            setTextQuality(context, "black", Math.floor(fontSize / 4) - 10, "white", "center", "round");
-            // Top Text
-            updateTheText(context, data, topText, "top", "Impact", height - yOffset)
-            // Bottom Text
-            updateTheText(context, data, bottomText, "bottom", "Impact", yOffset)
+            context.strokeStyle = "black";
+            context.lineWidth = Math.floor(fontSize / 4);
+            context.fillStyle = "white";
+            context.textAlign = "center";
+            context.lineJoin = "round";
+            context.font = `${fontSize}px Impact`;
+            // Add top text
+            context.textBaseline = "top";
+            context.strokeText(topText, width / 2, yOffset);
+            context.fillText(topText, width / 2, yOffset);
+            // Add bottom text
+            context.textBaseline = "bottom";
+            context.strokeText(bottomText, width / 2, height - yOffset);
+            context.fillText(bottomText, width / 2, height - yOffset);
+            
             // Creating the file
             const newFileName = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
             const buffer = canvas.toBuffer('image/jpeg')
@@ -29,7 +38,6 @@ function meme(req, res) {
         })     
     })
 }
-
 async function postData(res, filename, topText, bottomText) {
     const meme = new Meme({
         top_text: topText,
@@ -42,20 +50,6 @@ async function postData(res, filename, topText, bottomText) {
     } catch (err) {
         res.status(400).json({ message: err.message })
     }
-}
-function setTextQuality(context, strokeStyle, lineWidth, fillStyle, textAlign, lineJoin) {
-    context.strokeStyle = strokeStyle;
-    context.lineWidth = lineWidth;
-    context.fillStyle = fillStyle;
-    context.textAlign = textAlign;
-    context.lineJoin = lineJoin;
-}
-function updateTheText(context, source, text, baseline, font, height) {
-    const { width, fontSize } = manageTheImage(source)
-    context.font = `${fontSize}px ${font}`;
-    context.textBaseline = baseline;
-    context.strokeText(text, width / 2, height);
-    context.fillText(text, width / 2, height);
 }
 function manageTheImage(source) {
     const src = source;
@@ -82,7 +76,7 @@ function getImageHeight(source) {
 }
 function getTextFontSize(source) {
     const width = getImageWidth(source);
-    return Math.floor(width / 10);
+    return Math.floor(width / 10) - 10;
 }
 function getTextOffset(source) {
     const height = getImageHeight(source)
