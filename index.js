@@ -20,7 +20,5 @@ mongoose.connect(dbURL, { useNewUrlParser: true, useUnifiedTopology: true })
       .then(() => app.listen(port, () => {console.log(`Express party at port: ${port}`)}))
       .catch((err) => console.log(err));
 
-
-
-const memes = require("./routes/api/memes")
+const memes = require("./src/routes/api/memes")
 app.use("/api/meme-builder", memes)

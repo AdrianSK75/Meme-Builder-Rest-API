@@ -2,11 +2,11 @@ const fs = require("fs")
 const { createCanvas, loadImage, Image } = require("canvas")
 const Meme = require("../../models/generatedMeme")
 
-function meme(req, res) {
+function createMeme(req, res) {
     fs.readFile(`public/images/default/${req.body.file}.jpg`, function(err, data) {
         if (err) throw err;
         // Defining the constants
-        const { width, height, fontSize, yOffset } = manageTheImage(data);
+        const { width, height, fontSize, yOffset } = _manageTheImage(data);
         const canvas = createCanvas(width, height);
         const context = canvas.getContext("2d")
         const topText = req.body.top_text.toUpperCase();
@@ -34,11 +34,11 @@ function meme(req, res) {
             const buffer = canvas.toBuffer('image/jpeg')
             fs.writeFileSync(`./public/images/generated/${newFileName}.jpg`, buffer)
             // Post the image to database
-            postData(res, newFileName, topText, bottomText);
+            _postData(res, newFileName, topText, bottomText);
         })     
     })
 }
-async function postData(res, filename, topText, bottomText) {
+async function _postData(res, filename, topText, bottomText) {
     const meme = new Meme({
         top_text: topText,
         bottom_text: bottomText,
@@ -51,38 +51,38 @@ async function postData(res, filename, topText, bottomText) {
         res.status(400).json({ message: err.message })
     }
 }
-function manageTheImage(source) {
+function _manageTheImage(source) {
     const src = source;
     return {
-        img: getChoosedImage(src),
-        width: getImageWidth(src),
-        height: getImageHeight(src),
-        fontSize: getTextFontSize(src),
-        yOffset: getTextOffset(src)
+        img: _getChoosedImage(src),
+        width: _getImageWidth(src),
+        height: _getImageHeight(src),
+        fontSize: _getTextFontSize(src),
+        yOffset: _getTextOffset(src)
     }
 }
-function getChoosedImage(source) {
+function _getChoosedImage(source) {
     const image = new Image();
     image.src = source
     return image
 }
-function getImageWidth(source) {
-    const image = getChoosedImage(source);
+function _getImageWidth(source) {
+    const image = _getChoosedImage(source);
     return image.width;
 }
-function getImageHeight(source) {
-    const image = getChoosedImage(source);
+function _getImageHeight(source) {
+    const image = _getChoosedImage(source);
     return image.height;
 }
-function getTextFontSize(source) {
-    const width = getImageWidth(source);
+function _getTextFontSize(source) {
+    const width = _getImageWidth(source);
     return Math.floor(width / 10) - 10;
 }
-function getTextOffset(source) {
-    const height = getImageHeight(source)
+function _getTextOffset(source) {
+    const height = _getImageHeight(source)
     return height / 25;
 }
 
 module.exports = {
-    meme
+    createMeme
 }

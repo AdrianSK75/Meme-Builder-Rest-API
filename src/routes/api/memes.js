@@ -4,12 +4,11 @@ const defaultMemes = require("../../controllers/api/DefaultMemes");
 const post = require("../../controllers/api/Post");
 const generatedMemes = require("../../controllers/api/GeneratedMemes")
 // GET Default Memes
-router.get('/getDefaultMemes', defaultMemes.showMemes);
+router.get('/getDefaultMemes', defaultMemes.getMemes);
 // POST The Meme
-router.post("/generateMemes", post.meme)
+router.post("/createMeme", post.createMeme)
 // GET Generated Memes
-router.get('/getGeneratedMemes', generatedMemes.showMemes)
-router.get('/getGeneratedMemes/:offset-:limit', generatedMemes.showMemes)
+router.get('/getGeneratedMemes', generatedMemes.getMemes)
 // DELETE All Generated Memes from DB
 router.delete("/deleteGeneratedMemes", generatedMemes.deleteFiles)
 

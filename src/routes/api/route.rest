@@ -1,0 +1,17 @@
+POST http://localhost:5000/api/meme-builder/createMeme
+Content-Type: application/json
+
+ {
+     "top_text": "Muahaaaha",
+     "bottom_text": "I killed you on Fornite",
+     "file": "evil-kid"
+ }
+
+###
+GET http://localhost:5000/api/meme-builder/getDefaultMemes
+
+###
+GET http://localhost:5000/api/meme-builder/getGeneratedMemes/
+
+###
+GET http://localhost:5000/api/meme-builder/getGeneratedMemes?offset=1&limit=3
