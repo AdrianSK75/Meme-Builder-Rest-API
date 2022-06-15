@@ -3,6 +3,7 @@ const { createCanvas, loadImage, Image } = require("canvas")
 const Meme = require("../../models/generatedMeme")
 
 function createMeme(req, res) {
+    
     fs.readFile(`public/images/default/${req.body.file}.jpg`, function(err, data) {
         if (err) throw err;
         // Defining the constants
@@ -28,7 +29,6 @@ function createMeme(req, res) {
             context.textBaseline = "bottom";
             context.strokeText(bottomText, width / 2, height - yOffset);
             context.fillText(bottomText, width / 2, height - yOffset);
-            
             // Creating the file
             const newFileName = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
             const buffer = canvas.toBuffer('image/jpeg')

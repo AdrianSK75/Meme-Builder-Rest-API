@@ -8,10 +8,12 @@ Content-Type: application/json
  }
 
 ###
-GET http://localhost:5000/api/meme-builder/getDefaultMemes
+GET http://localhost:5000/api/meme-builder/getDefaultMemes?api_key=wdb7qcoj0bryfe8vkwufvk
 
 ###
 GET http://localhost:5000/api/meme-builder/getGeneratedMemes/
 
 ###
 GET http://localhost:5000/api/meme-builder/getGeneratedMemes?offset=1&limit=3
+###
+# GET http://localhost:5000/api/meme-builder/getDB
