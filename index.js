@@ -5,7 +5,7 @@ const mongoose = require("mongoose")
 const bodyParser = require("body-parser");
 const logger = require("morgan")
 const app = express()
-const port = 5000
+const port = process.env.PORT || 5000;
 const dbURL = "mongodb+srv://Rares:parola12345@cluster0.jxvkaa4.mongodb.net/meme?retryWrites=true&w=majority"
 
 mongoose.connect(dbURL, { useNewUrlParser: true, useUnifiedTopology: true })
