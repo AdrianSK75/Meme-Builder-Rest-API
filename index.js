@@ -12,7 +12,8 @@ mongoose.connect(dbURL, { useNewUrlParser: true, useUnifiedTopology: true })
       .then(() => {
             app.listen(port, () => {console.log(`Express party at port: ${port}`)})
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err.message));
+
 
 // Middleware
 app.use(logger("dev"))
@@ -26,16 +27,18 @@ app.use(express.static(path.join(__dirname, "public")))
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
+
 app.use((req, res, next) => {
       const apiKey = !req.get("API_KEY") ? req.query.api_key : req.get("API_KEY");
       if (!apiKey || apiKey !== process.env.API_KEY) {
-        res.status(401).json({error: '401 unauthorised'.toUpperCase()})
+        res.status(401).json({error: "Authentication Denied!"})
       } else {
         next()
       }
 })
+app.use((err, res, req, next) => {
+      res.status(422).json({ error: err.message })
+})
 
 const memes = require("./src/routes/api/memes")
 app.use("/api/meme-builder", memes)
-
-

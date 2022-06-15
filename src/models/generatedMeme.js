@@ -3,15 +3,15 @@ const mongoose = require("mongoose");
 const generatedMemeSchema = new mongoose.Schema({
     top_text: {
         type: String,
-        required: true
+        required:[true, "Top Text is required"]
     },
     bottom_text: {
         type: String,
-        required: true
+        required: [true, "Bottom Text is required"]
     },
     file: {
         type: String,
-        required: true
+        required: [true, "File Name is required"]
     }
 })
 

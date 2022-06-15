@@ -2,10 +2,14 @@ const fs = require("fs")
 const { createCanvas, loadImage, Image } = require("canvas")
 const Meme = require("../../models/generatedMeme")
 
-function createMeme(req, res) {
-    
+function createMeme(req, res, next) {
+    const { top_text, bottom_text, file } = req.body;
+    if (!top_text || !bottom_text || !file) {
+        res.status(422).json("Post request denied! You missed one or more required fields!")
+        return;
+    }
     fs.readFile(`public/images/default/${req.body.file}.jpg`, function(err, data) {
-        if (err) throw err;
+        if (err) throw err
         // Defining the constants
         const { width, height, fontSize, yOffset } = _manageTheImage(data);
         const canvas = createCanvas(width, height);
@@ -34,11 +38,11 @@ function createMeme(req, res) {
             const buffer = canvas.toBuffer('image/jpeg')
             fs.writeFileSync(`./public/images/generated/${newFileName}.jpg`, buffer)
             // Post the image to database
-            _postData(res, newFileName, topText, bottomText);
+            _postData(res, newFileName, topText, bottomText, next);
         })     
     })
 }
-async function _postData(res, filename, topText, bottomText) {
+async function _postData(res, filename, topText, bottomText, next) {
     const meme = new Meme({
         top_text: topText,
         bottom_text: bottomText,
@@ -48,7 +52,7 @@ async function _postData(res, filename, topText, bottomText) {
         const newMeme = await meme.save()
         res.status(201).json(newMeme)
     } catch (err) {
-        res.status(400).json({ message: err.message })
+        next
     }
 }
 function _manageTheImage(source) {

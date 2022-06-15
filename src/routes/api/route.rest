@@ -1,9 +1,9 @@
-POST http://localhost:5000/api/meme-builder/createMeme
+POST http://localhost:5000/api/meme-builder/createMeme?api_key=wdb7qcoj0bryfe8vkwufvk
 Content-Type: application/json
 
  {
-     "top_text": "Muahaaaha",
-     "bottom_text": "I killed you on Fornite",
+     "top_text": "dfsdsfd",
+     "bottom_text": "dfsddgf",
      "file": "evil-kid"
  }
 
@@ -11,9 +11,9 @@ Content-Type: application/json
 GET http://localhost:5000/api/meme-builder/getDefaultMemes?api_key=wdb7qcoj0bryfe8vkwufvk
 
 ###
-GET http://localhost:5000/api/meme-builder/getGeneratedMemes/
+GET http://localhost:5000/api/meme-builder/getGeneratedMemes
 
 ###
 GET http://localhost:5000/api/meme-builder/getGeneratedMemes?offset=1&limit=3
 ###
-# GET http://localhost:5000/api/meme-builder/getDB
+DELETE http://localhost:5000/api/meme-builder/deleteGeneratedMemes?api_key=wdb7qcoj0bryfe8vkwufvk
