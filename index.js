@@ -6,9 +6,8 @@ const bodyParser = require("body-parser");
 const logger = require("morgan")
 const app = express()
 const port = process.env.PORT || 5000;
-const dbURL = "mongodb+srv://Rares:parola12345@cluster0.jxvkaa4.mongodb.net/meme?retryWrites=true&w=majority"
 
-mongoose.connect(dbURL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
       .then(() => {
             app.listen(port, () => {console.log(`Express party at port: ${port}`)})
       })
@@ -41,4 +40,4 @@ app.use((err, res, req, next) => {
 })
 
 const memes = require("./src/routes/api/memes")
-app.use("/api/meme-builder", memes)
+app.use("/api/", memes)
