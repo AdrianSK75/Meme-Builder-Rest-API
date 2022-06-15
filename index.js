@@ -14,7 +14,6 @@ mongoose.connect(dbURL, { useNewUrlParser: true, useUnifiedTopology: true })
       })
       .catch((err) => console.error(err.message));
 
-
 // Middleware
 app.use(logger("dev"))
 app.use(bodyParser.json())
@@ -26,7 +25,6 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, "public")))
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
-
 
 app.use((req, res, next) => {
       const apiKey = !req.get("API_KEY") ? req.query.api_key : req.get("API_KEY");
