@@ -30,7 +30,7 @@ app.use(express.json())
 app.use((req, res, next) => {
       const apiKey = !req.get("API_KEY") ? req.query.api_key : req.get("API_KEY");
       if (!apiKey || apiKey !== process.env.API_KEY) {
-        res.status(401).json({error: "Authentication Denied!"})
+        res.status(401).json({error: "Unathorized!"})
       } else {
         next()
       }
