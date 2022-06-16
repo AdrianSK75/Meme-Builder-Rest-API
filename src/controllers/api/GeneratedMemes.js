@@ -3,8 +3,8 @@ const fs = require("fs")
 
 async function getMemes(req, res, next) {
     const memes = await _retrieveMemes();
-    let offset = req.query.offset == null ? 0 : parseInt(req.query.offset);
-    let limit = req.query.limit == null ?  memes.length - 1 : parseInt(req.query.limit)
+    let offset = req.query.offset == null || parseInt(req.query.offset) >= memes.length - 1 ? 0 : parseInt(req.query.offset);
+    let limit = req.query.limit == null || parseInt(req.query.limit) >= memes.length - 1 ? memes.length - 1 : parseInt(req.query.limit)
     try {
         const response = await Meme.find().skip(offset).limit(limit);
         res.status(200).json(response)
