@@ -19,6 +19,7 @@ app.use(bodyParser.json())
 app.use((req, res, next) => {
       res.header('Access-Control-Allow-Origin', '*')
       res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, API-Key, Authorization')
+      res.header("Access-Control-Allow-Credentials", 'true')
       next()
 })
 app.use(express.static(path.join(__dirname, "public")))
@@ -26,7 +27,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
 app.use((req, res, next) => {
-      const apiKey = !req.get("API_KEY") ? req.query.api_key : req.get("API_KEY");
+      const apiKey = !req.get("API_KEY") ? req.query.api_key : req.get("API_KEY"); 
       if (!apiKey || apiKey !== process.env.API_KEY) {
         res.status(401).json({error: "Unathorized!"})
       } else {
