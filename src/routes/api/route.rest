@@ -17,4 +17,7 @@ GET http://localhost:5000/api/getGeneratedMemes
 GET http://localhost:5000/api/getGeneratedMemes?offset=1&limit=3?api_key=wdb7qcoj0bryfe8vkwufvk
 
 ###
+GET http://localhost:5000/api/create-txt-file?txt=UnTextSimplu&api_key=wdb7qcoj0bryfe8vkwufvk
+
+###
 DELETE http://localhost:5000/api/deleteGeneratedMemes?api_key=wdb7qcoj0bryfe8vkwufvk
